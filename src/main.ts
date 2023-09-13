@@ -7,8 +7,12 @@ import bodyParser from "body-parser";
 import { AppStartup } from "./startup";
 import { morganMiddleware } from "./middlewares";
 import { errorHandler } from "./exceptions";
+import swaggerUi from "swagger-ui-express";
+import { swaggerSpec } from "./swagger";
 
 const app: Express = express();
+
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 AppDataSource.initialize()
   .then(() => {
