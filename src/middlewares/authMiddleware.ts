@@ -10,24 +10,27 @@ import { ConsoleUtils } from "../utils/console.utils";
 import { UserService } from "../modules/users/services/user.service";
 import { CustomRequest, IJwtPayload } from "../@types";
 import { UserMapper } from "../modules/users/resources";
+import { EAccountType } from "../modules/users/config/user.enum";
 
 const logger = new ConsoleUtils("authMiddleware");
 export const authMiddleware =
-  (permissions?: string[]) => async (req: CustomRequest, res: Response, next: NextFunction) => {
+  (...permissions: string[]) =>
+  async (req: CustomRequest, res: Response, next: NextFunction) => {
     try {
       permissions = permissions ?? [];
       const bearerToken = AuthUtils.getBearerToken(req);
       if (!bearerToken) throw new UnauthorizedException("unauthorized.");
 
       const payload = jwt.verify(bearerToken, env.jwtSecretKey) as IJwtPayload;
-      logger.info("payload:", payload);
+      logger.info("payload:", payload, permissions);
       const user = await UserService.getUserById(payload.id);
       const loggedUser = UserMapper.toLoggedInDTO(user);
       // Check user has all permisison
-      const hasPermisison =
-        permissions?.length > 0 ? permissions?.filter((item) => loggedUser?.permissions.includes(item)) : true;
+      const samePermisison =
+        permissions?.length > 0 ? permissions?.filter((item) => loggedUser?.permissions.includes(item)) : [];
+      const hasPermission = user?.accountType === EAccountType.SUPER_ADMIN ?? samePermisison.length > 0;
 
-      if (hasPermisison) {
+      if (hasPermission) {
         req.user = loggedUser;
       } else {
         throw new AccessDeniedException("forbiden");

@@ -4,7 +4,7 @@ import { Module, Permission, Role, RolePermission, User, UserRole } from "../dat
 
 export const AppDataSource = new DataSource({
   type: "mysql",
-  logging: true,
+  logging: env.isDevelopment,
   synchronize: false,
   replication: {
     master: {

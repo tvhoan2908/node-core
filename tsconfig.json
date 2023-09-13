@@ -13,5 +13,5 @@
     "experimentalDecorators": true,
     "strictPropertyInitialization": false
   },
-  "exclude": ["node_modules", "build"],
+  "exclude": ["node_modules", "build", "commitlint.config.js", "**/tests/*.ts"]
 }

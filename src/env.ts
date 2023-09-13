@@ -9,6 +9,7 @@ dotenv.config({
 export const env = {
   node: process.env.NODE_ENV || "dev",
   port: process.env.PORT || 3100,
+  isDevelopment: process.env.NODE_ENV !== "dev",
   db: {
     type: process.env.MASTER_DB_DIALECT,
     master: {
