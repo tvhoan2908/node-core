@@ -23,6 +23,7 @@
   "dependencies": {
     "bcrypt": "^5.1.1",
     "chalk": "^4.1.2",
+    "commander": "^11.0.0",
     "dayjs": "^1.11.9",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
@@ -60,6 +61,23 @@
       "npm run lint",
       "npm run format"
     ]
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "tests",
+    "testRegex": ".*|\\.(test|spec)\\.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "collectCoverageFrom": [
+      "**/*.(t|j)s"
+    ],
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
   },
   "engines": {
     "node": ">=16"
