@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { ILoggedUser } from "../user";
+import { IInvalidRequest } from "../exception";
 
 export interface IBaseResponse<T> {
   success: boolean;
@@ -35,4 +36,5 @@ export interface IResponseEntity<T> {
 
 export interface CustomRequest extends Request {
   user?: ILoggedUser | null;
+  invalidError?: IInvalidRequest;
 }
