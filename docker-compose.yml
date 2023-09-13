@@ -1,0 +1,25 @@
+version: '3.7'
+services:
+  node_mysql:
+    image: mysql:8
+    container_name: core_mysql
+    restart: unless-stopped
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - node_mysql_data:/var/lib/db
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-}
+      - MYSQL_USER=${MYSQL_USER:-}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-}
+      - TZ=${MYSQL_TZ:-}
+    ports:
+      - 3308:3306
+    networks:
+      - node_core
+
+volumes:
+  node_mysql_data:
+
+networks:
+  node_core:
